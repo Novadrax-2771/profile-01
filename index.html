@@ -3,170 +3,205 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Profil Arya Adity Pasha</title>
-  <meta name="description" content="Website profil mahasiswa bertema Persona 5: identitas, program studi, deskripsi, hobi, dan kontak.">
+  <title>Profil Arya Aditya Pasha</title>
+  <meta name="description" content="Website profil mahasiswa bertema Persona 5 Royal: identitas, program studi, deskripsi, dan hobi.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;700&display=swap" rel="stylesheet">
+  <!-- Font pengganti gratis untuk gaya P5R (lihat README untuk pemetaannya) -->
+  <link href="https://fonts.googleapis.com/css2?family=Arsenal:wght@400;700&family=Arvo:wght@700&family=Caprasimo&family=Jost:wght@700&family=League+Spartan:wght@800&family=Libre+Franklin:wght@700;800&family=Noto+Sans+JP:wght@700&family=Noto+Serif:wght@700&display=swap" rel="stylesheet">
   <style>
     :root {
       --red: #e5001c;
-      --dark-red: #8f0010;
       --black: #0b0b0b;
       --white: #ffffff;
+      --text: "Arsenal", "Optima", system-ui, sans-serif;           /* Regular text */
+      --action: "Libre Franklin", "Franklin Gothic Medium", "Helvetica Neue", sans-serif; /* Waktu, aksi, label */
     }
     * { box-sizing: border-box; margin: 0; }
     html { background: var(--black); }
     body {
-      font-family: "Archivo", system-ui, sans-serif;
-      color: var(--white);
-      line-height: 1.6;
-      min-height: 100vh;
-      padding: 48px 20px 64px;
-      overflow-x: hidden;
-      background:
-        radial-gradient(circle, rgba(0,0,0,.35) 1.5px, transparent 2px) 0 0 / 10px 10px,
-        linear-gradient(115deg, var(--red) 0 38%, var(--black) 38% 41%, var(--dark-red) 41% 58%, var(--black) 58% 100%);
-      background-attachment: fixed;
+      position: relative; min-height: 100vh; overflow-x: hidden;
+      padding: 56px 20px 72px;
+      font-family: var(--text); letter-spacing: .03em; /* Arsenal dibuat sedikit lebih lebar */
+      color: var(--white); line-height: 1.6; background: var(--black);
     }
-    h1, h2, .display { font-family: "Anton", Impact, sans-serif; font-weight: 400; text-transform: uppercase; letter-spacing: .02em; }
-    .wrap { max-width: 920px; margin: 0 auto; display: grid; gap: 44px; }
 
-    /* ===== Header / kartu identitas ===== */
+    /* ===== Gambar 2: latar bintang, bergerak pelan ke kanan-bawah ===== */
+    body::before {
+      content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background: var(--bg, none) 0 0 / 480px 480px repeat;
+      animation: drift 96s linear infinite;
+    }
+    body::after {
+      content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background: linear-gradient(135deg, rgba(0,0,0,.75) 0%, rgba(0,0,0,.35) 40%, rgba(0,0,0,0) 75%);
+    }
+    @keyframes drift { to { background-position: 480px 480px; } }
+
+    /* ===== Gambar 1: gugusan bintang di pojok kiri ===== */
+    .corner { position: fixed; top: -34px; left: -40px; width: 210px; height: 210px; z-index: 1; pointer-events: none; }
+    .corner svg { width: 100%; height: 100%; display: block; }
+    .burst { position: fixed; z-index: 50; pointer-events: none; will-change: transform, opacity; }
+
+    .wrap { position: relative; z-index: 2; max-width: 920px; margin: 0 auto; display: grid; gap: 56px; }
+
+    /* ===== Animasi kaku besar-kecil ala P5R ===== */
+    @keyframes stiff {
+      0%, 100% { scale: 1; rotate: 0deg; }
+      50% { scale: 1.06; rotate: 1deg; }
+    }
+
+    /* ===== Gambar 4: huruf ransom-note (campuran 6 font) ===== */
+    .r { display: inline-block; }
+    .r span { display: inline-block; line-height: 1.05; padding: 0 .06em; margin: 0 .01em; letter-spacing: 0; }
+    .r span:nth-child(6n+1) { font-family: "Times New Roman", "Noto Serif", serif; font-weight: 700; transform: rotate(-3deg) translateY(-.04em); }
+    .r span:nth-child(6n+2) { font-family: "Caprasimo", "Cooper Black", serif; background: var(--white); color: var(--black); font-size: .95em; transform: rotate(2deg); }
+    .r span:nth-child(6n+3) { font-family: "League Spartan", "Century Gothic", sans-serif; font-weight: 800; font-size: 1.08em; transform: rotate(-1deg) translateY(.05em); }
+    .r span:nth-child(6n+4) { font-family: "Arvo", "Clarendon", serif; font-weight: 700; transform: rotate(3deg); }
+    .r span:nth-child(6n+5) { font-family: "Jost", "Futura", sans-serif; font-weight: 700; background: var(--white); color: var(--black); font-size: 1.02em; transform: rotate(-2deg); }
+    .r span:nth-child(6n)   { font-family: "Noto Serif", serif; font-weight: 700; font-size: .94em; transform: rotate(2deg) translateY(-.05em); }
+    .r span.sp { width: .32em; padding: 0; background: none; }
+
+    /* ===== Header ===== */
     .hero { display: grid; grid-template-columns: 280px 1fr; gap: 32px; align-items: center; }
     .photo {
       position: relative; width: 260px; height: 320px; justify-self: center;
-      transform: rotate(-4deg);
-      animation: slash .5s cubic-bezier(.2,.9,.3,1.2) both;
+      transform: rotate(-4deg); animation: slash .5s cubic-bezier(.2,.9,.3,1.2) both;
     }
-    .photo::before { /* bayangan merah */
-      content: ""; position: absolute; inset: 0; background: var(--black);
+    .photo::before {
+      content: ""; position: absolute; inset: 0; background: var(--red);
       clip-path: polygon(8% 0, 100% 4%, 92% 100%, 0 94%); transform: translate(14px, 14px);
     }
     .photo .frame {
-      position: absolute; inset: 0; background: var(--white); padding: 8px;
+      position: absolute; inset: 0; background: var(--white);
       clip-path: polygon(8% 0, 100% 4%, 92% 100%, 0 94%);
     }
-    .photo .frame > * { width: 100%; height: 100%; object-fit: cover; display: block;
-      clip-path: polygon(8% 0, 100% 4%, 92% 100%, 0 94%); background: var(--red); }
+    /* SVG cadangan di belakang, foto asli menimpa di atasnya */
+    .photo .frame > * { position: absolute; inset: 8px; width: calc(100% - 16px); height: calc(100% - 16px); object-fit: cover; display: block; }
 
     .name-block { animation: slash .5s .12s cubic-bezier(.2,.9,.3,1.2) both; }
     .tag {
       display: inline-block; background: var(--white); color: var(--black);
-      font-family: "Anton", Impact, sans-serif; letter-spacing: .08em; text-transform: uppercase;
-      padding: 2px 16px; transform: skew(-12deg) rotate(-2deg); margin-bottom: 10px;
+      font-family: var(--action); font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+      padding: 2px 16px; transform: skew(-12deg) rotate(-2deg); margin-bottom: 12px;
+      animation: stiff 3.2s steps(4) infinite;
     }
     h1 {
-      font-size: clamp(2.6rem, 8vw, 5rem); line-height: 1; font-style: italic;
-      background: var(--black); display: inline-block; padding: 8px 28px 8px 20px;
-      transform: skew(-10deg) rotate(-2deg);
-      box-shadow: 10px 10px 0 var(--white);
+      font-size: clamp(2.2rem, 7vw, 4.2rem); line-height: 1.1; font-weight: 400;
+      background: var(--black); display: block; width: fit-content; padding: 10px 26px 12px 20px;
+      transform: skew(-8deg) rotate(-2deg); box-shadow: 10px 10px 0 var(--red);
+      transform-origin: left center; animation: stiff 3.6s steps(4) infinite;
     }
-    h1 span { display: inline-block; transform: skew(10deg); }
 
-    dl { margin-top: 28px; display: grid; gap: 8px; max-width: 460px; }
-    dl div {
-      display: grid; grid-template-columns: 130px 1fr; background: var(--black);
-      transform: skew(-10deg); border-left: 8px solid var(--white);
+    /* ===== Gambar 3: subjudul ala menu P5R ===== */
+    .panel { position: relative; }
+    .hd { display: flex; align-items: flex-end; width: fit-content; position: relative; z-index: 2;
+      margin: 0 0 -16px -10px; filter: drop-shadow(6px 6px 0 var(--red));
+      transform-origin: left center; animation: stiff 3.4s steps(4) infinite; }
+    .panel:nth-of-type(2) .hd { animation-delay: -.8s; }
+    .panel:nth-of-type(3) .hd { animation-delay: -1.6s; }
+    .hd h2 {
+      font-size: 2.1rem; font-weight: 400; color: var(--white); background: var(--black);
+      padding: 6px 34px 12px 24px; clip-path: polygon(0 14%, 97% 0, 100% 84%, 3% 100%);
+      transform: rotate(-2deg);
     }
+    .hd .jp {
+      margin-left: -14px; padding: 2px 22px 2px 28px; background: var(--red); color: var(--white);
+      font-family: "Noto Sans JP", sans-serif; font-weight: 700; font-size: .85rem; letter-spacing: .08em;
+      clip-path: polygon(8% 0, 100% 0, 94% 100%, 0 100%); transform: rotate(-2deg) translateY(-4px);
+    }
+    .panel .wrapper { filter: drop-shadow(8px 8px 0 var(--red)); }
+    .panel .body {
+      position: relative; background: var(--black); padding: 48px 36px 32px;
+      clip-path: polygon(0 3%, 100% 0, 98.5% 100%, 1.5% 96%);
+    }
+    .panel .body::before { /* strip bintang hitam-putih di atas panel */
+      content: ""; position: absolute; left: 0; right: 0; top: 0; height: 20px;
+      background: repeating-linear-gradient(115deg, var(--white) 0 9px, var(--black) 9px 18px);
+    }
+    .about p { max-width: 62ch; font-size: 1.15rem; }
+
+    /* Identitas */
+    dl { display: grid; gap: 10px; max-width: 520px; }
+    dl div { display: grid; grid-template-columns: 130px 1fr; background: #1a1a1a; transform: skew(-10deg); border-left: 8px solid var(--white); }
     dl div:nth-child(even) { margin-left: 18px; }
     dt, dd { padding: 6px 14px; transform: skew(10deg); }
-    dt { color: var(--red); font-family: "Anton", Impact, sans-serif; text-transform: uppercase; letter-spacing: .06em; }
+    dt { color: var(--red); font-family: var(--action); font-weight: 800; letter-spacing: .06em; text-transform: uppercase; font-size: .9rem; align-self: center; }
     dd { font-weight: 700; }
 
-    /* ===== Bagian konten ===== */
-    .panel { position: relative; }
-    .panel h2 {
-      display: inline-block; font-size: 1.9rem; font-style: italic;
-      background: var(--white); color: var(--black);
-      padding: 0 22px 0 16px; transform: skew(-12deg) rotate(-2deg);
-      position: relative; z-index: 2; margin-left: -8px;
-    }
-    .panel h2 span { display: inline-block; transform: skew(12deg); }
-    .panel .body {
-      background: var(--black); margin-top: -14px; padding: 36px 36px 30px;
-      clip-path: polygon(0 4%, 100% 0, 98% 100%, 1.5% 96%);
-      border: 0; box-shadow: 0 0 0 4px var(--white);
-    }
-    .panel .wrapper { filter: drop-shadow(10px 10px 0 var(--red)); }
-    .about p { max-width: 62ch; font-size: 1.05rem; }
-
+    /* Hobi */
     .chips { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 14px; }
     .chips li {
-      background: var(--white); color: var(--black); font-weight: 700;
-      padding: 6px 22px; transform: skew(-12deg);
-      transition: background .15s, color .15s, transform .15s;
+      background: var(--white); color: var(--black); font-family: var(--action); font-weight: 800;
+      padding: 6px 24px; transform: skew(-12deg); transition: background .15s, color .15s, translate .15s;
+      animation: stiff 3.6s steps(4) infinite;
     }
-    .chips li:hover { background: var(--red); color: var(--white); transform: skew(-12deg) translate(-3px, -3px); }
+    .chips li:nth-child(2) { animation-delay: -.9s; }
+    .chips li:nth-child(3) { animation-delay: -1.8s; }
+    .chips li:nth-child(4) { animation-delay: -2.7s; }
+    .chips li:hover { background: var(--red); color: var(--white); translate: -3px -3px; }
 
-    .contacts { list-style: none; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
-    .contacts a {
-      display: block; padding: 10px 20px; background: var(--white); color: var(--black);
-      font-family: "Anton", Impact, sans-serif; letter-spacing: .06em; text-transform: uppercase;
-      text-decoration: none; transform: skew(-10deg);
-      transition: background .15s, color .15s, transform .15s;
+    footer { text-align: center; font-family: var(--action); font-weight: 800; letter-spacing: .1em; text-transform: uppercase; font-size: .9rem; }
+    footer span { background: var(--black); padding: 4px 16px; display: inline-block; transform: skew(-12deg); box-shadow: 5px 5px 0 var(--red); }
+
+    @keyframes slash { from { opacity: 0; translate: -60px 0; scale: .9; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      body::before, .photo, .name-block, .tag, h1, .hd, .chips li { animation: none; }
     }
-    .contacts a::before { content: "\2605  "; color: var(--red); }
-    .contacts a:hover { background: var(--red); color: var(--white); transform: skew(-10deg) translateX(10px); }
-    .contacts a:hover::before { color: var(--white); }
-    a:focus-visible { outline: 4px solid var(--red); outline-offset: 3px; }
-
-    footer { text-align: center; font-family: "Anton", Impact, sans-serif; letter-spacing: .1em;
-      text-transform: uppercase; }
-    footer span { background: var(--black); padding: 4px 16px; display: inline-block; transform: skew(-12deg); }
-
-    @keyframes slash { from { opacity: 0; transform: translateX(-60px) rotate(-8deg) scale(.9); } }
-    .photo { --r: -4deg; }
-    @media (prefers-reduced-motion: reduce) { .photo, .name-block { animation: none; } }
-
     @media (max-width: 720px) {
-      body { background-attachment: scroll; padding-top: 32px; }
-      .hero { grid-template-columns: 1fr; gap: 36px; text-align: left; }
-      dl div { grid-template-columns: 110px 1fr; }
-      .panel .body { padding: 32px 22px 26px; }
+      body { padding-top: 40px; }
+      .corner { width: 130px; height: 130px; top: -20px; left: -24px; }
+      .hero { grid-template-columns: 1fr; gap: 36px; }
+      dl div { grid-template-columns: 105px 1fr; }
+      .panel .body { padding: 44px 22px 28px; }
+      .hd h2 { font-size: 1.6rem; }
     }
   </style>
 </head>
 <body>
-  <main class="wrap">
+  <div class="corner" aria-hidden="true"></div>
 
-    <!-- Nama & identitas, foto/ilustrasi, program studi -->
+  <main class="wrap">
     <header class="hero">
       <div class="photo">
         <div class="frame">
-          <!-- Ganti dengan fotomu: <img src="foto.jpg" alt="Foto Nama Lengkap Kamu"> -->
-          <img class="foto" src= "Gokurakugai.jpg" alt= "Foto Arya Aditya Pasha">
           <svg viewBox="0 0 200 250" role="img" aria-label="Ilustrasi profil" preserveAspectRatio="xMidYMid slice">
             <rect width="200" height="250" fill="#e5001c"/>
             <circle cx="100" cy="100" r="42" fill="#0b0b0b"/>
             <path d="M20 250c0-56 36-88 80-88s80 32 80 88z" fill="#0b0b0b"/>
           </svg>
+          <img src="Gokurakugai.jpg" alt="Foto Arya Aditya Pasha" onerror="this.remove()">
         </div>
       </div>
 
       <div class="name-block">
         <span class="tag">Profil mahasiswa</span>
-        <h1><span>Arya Aditya Pasha</span></h1>
-        <dl>
-          <div><dt>NIM</dt><dd>025241461198</dd></div>
-          <div><dt>Prodi</dt><dd>Manajemen Informasi Komunikasi</dd></div>
-          <div><dt>Kampus</dt><dd>Sekolah Tinggi MUulti Media (MMTC)</dd></div>
-          <div><dt>Angkatan</dt><dd>2025</dd></div>
-        </dl>
+        <h1 data-ransom>Arya Aditya Pasha</h1>
       </div>
     </header>
 
-    <!-- Deskripsi singkat -->
+    <section class="panel" aria-labelledby="identitas">
+      <div class="hd"><h2 id="identitas" data-ransom>Identitas</h2><span class="jp" aria-hidden="true">プロフィール</span></div>
+      <div class="wrapper"><div class="body">
+        <dl>
+          <div><dt>NIM</dt><dd>025241461198</dd></div>
+          <div><dt>Prodi</dt><dd>Manajemen Informasi Komunikasi</dd></div>
+          <div><dt>Kampus</dt><dd>Sekolah Tinggi Multi Media (MMTC)</dd></div>
+          <div><dt>Angkatan</dt><dd>2025</dd></div>
+        </dl>
+      </div></div>
+    </section>
+
     <section class="panel about" aria-labelledby="tentang">
-      <h2 id="tentang"><span>Tentang saya</span></h2>
+      <div class="hd"><h2 id="tentang" data-ransom>About Me</h2><span class="jp" aria-hidden="true">自己紹介</span></div>
       <div class="wrapper"><div class="body">
         <p>Halo! Saya mahasigma biasa makan nasi nonton SBR</p>
       </div></div>
     </section>
 
-    <!-- Hobi atau minat -->
     <section class="panel" aria-labelledby="hobi">
-      <h2 id="hobi"><span>Hobi dan minat</span></h2>
+      <div class="hd"><h2 id="hobi" data-ransom>Hobi dan minat</h2><span class="jp" aria-hidden="true">趣味</span></div>
       <div class="wrapper"><div class="body">
         <ul class="chips">
           <li>Game</li>
@@ -179,5 +214,99 @@
 
     <footer><span>&copy; 2026 Arya Aditya Pasha</span></footer>
   </main>
+
+  <script>
+    (function () {
+      "use strict";
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+      /* Bentuk bintang 5 sudut (pusat 0,0, radius 50) */
+      var P = "0,-50 11.23,-15.45 47.55,-15.45 18.17,5.9 29.39,40.45 0,19.1 -29.39,40.45 -18.17,5.9 -47.55,-15.45 -11.23,-15.45";
+      var uri = function (s) { return "data:image/svg+xml," + encodeURIComponent(s); };
+
+      /* Bintang konsentris putih-hitam khas P5 (gambar 1) */
+      function star(x, y, s, r, fg, bg, edge) {
+        var g = '<g transform="translate(' + x + ' ' + y + ') rotate(' + r + ') scale(' + s + ')">';
+        if (edge) {
+          g += '<polygon points="' + P + '" transform="translate(5 5) scale(1.1)" fill="' + edge + '"/>' +
+               '<polygon points="' + P + '" transform="scale(1.1)" fill="#0b0b0b"/>';
+        }
+        [1, .83, .66, .49, .32, .15].forEach(function (k, i) {
+          g += '<polygon points="' + P + '" transform="scale(' + k + ')" fill="' + (i % 2 ? bg : fg) + '"/>';
+        });
+        return g + "</g>";
+      }
+
+      /* Gambar 1: gugusan di pojok kiri */
+      var R = "#e5001c", W = "#fff", K = "#0b0b0b";
+      document.querySelector(".corner").innerHTML =
+        '<svg viewBox="0 0 360 360">' +
+        star(95, 150, 1.6, -15, W, K, R) + star(190, 62, .8, 10, W, K, R) +
+        star(270, 185, 1.5, 20, W, K, R) + star(130, 262, 1.1, 10, W, K, R) +
+        star(240, 275, 1.0, -20, W, K, R) + star(215, 118, .45, 0, R, K, null) +
+        star(185, 160, 1.05, -5, W, K, R) + "</svg>";
+
+      /* Gambar 2: ubin latar bintang rapat, garis konsentris abu-abu di atas hitam (seamless) */
+      var seed = 7;
+      function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+      var T = 480, body = "";
+      var defs = '<defs><g id="s">' + [1, .84, .68, .52, .36, .2].map(function (k) {
+        return '<polygon points="' + P + '" transform="scale(' + k + ')" fill="#0a0a0a" stroke="currentColor" stroke-width="2.4" vector-effect="non-scaling-stroke"/>';
+      }).join("") + "</g></defs>";
+      for (var n = 0; n < 62; n++) {
+        var cx = rnd() * T, cy = rnd() * T, sc = .55 + rnd() * 1.35, rot = rnd() * 72, gr = Math.round(60 + rnd() * 110), rad = 50 * sc;
+        for (var ix = -1; ix <= 1; ix++) for (var iy = -1; iy <= 1; iy++) {
+          var x = cx + ix * T, y = cy + iy * T;
+          if (x + rad > 0 && x - rad < T && y + rad > 0 && y - rad < T) {
+            body += '<use href="#s" transform="translate(' + x.toFixed(1) + " " + y.toFixed(1) + ") rotate(" + rot.toFixed(1) + ") scale(" + sc.toFixed(2) + ')" color="rgb(' + gr + "," + gr + "," + gr + ')"/>';
+          }
+        }
+      }
+      var tile = '<svg xmlns="http://www.w3.org/2000/svg" width="' + T + '" height="' + T + '" viewBox="0 0 ' + T + " " + T + '">' +
+        '<rect width="' + T + '" height="' + T + '" fill="#0a0a0a"/>' + defs + body + "</svg>";
+      document.documentElement.style.setProperty("--bg", 'url("' + uri(tile) + '")');
+
+      /* Gambar 4 + 3: pecah teks jadi huruf ransom-note */
+      document.querySelectorAll("[data-ransom]").forEach(function (el) {
+        var text = el.textContent.trim();
+        el.setAttribute("aria-label", text);
+        el.classList.add("r");
+        el.innerHTML = "";
+        text.split("").forEach(function (ch) {
+          var s = document.createElement("span");
+          s.setAttribute("aria-hidden", "true");
+          if (ch === " ") { s.className = "sp"; s.innerHTML = "&nbsp;"; } else { s.textContent = ch; }
+          el.appendChild(s);
+        });
+      });
+
+      /* Gambar 1: klik -> bintang menyebar di area kecil lalu memudar */
+      var variants = [
+        uri('<svg xmlns="http://www.w3.org/2000/svg" viewBox="-60 -60 120 120">' + star(0, 0, 1, 0, W, K, R) + "</svg>"),
+        uri('<svg xmlns="http://www.w3.org/2000/svg" viewBox="-60 -60 120 120">' + star(0, 0, 1, 0, R, W, K) + "</svg>"),
+        uri('<svg xmlns="http://www.w3.org/2000/svg" viewBox="-60 -60 120 120">' + star(0, 0, 1, 0, K, W, R) + "</svg>")
+      ];
+      document.addEventListener("pointerdown", function (e) {
+        if (reduce.matches) return;
+        var n = 8;
+        for (var i = 0; i < n; i++) {
+          var img = new Image();
+          var size = 16 + Math.random() * 22;
+          img.src = variants[i % variants.length];
+          img.alt = "";
+          img.className = "burst";
+          img.style.cssText = "width:" + size + "px;height:" + size + "px;left:" + (e.clientX - size / 2) + "px;top:" + (e.clientY - size / 2) + "px";
+          document.body.appendChild(img);
+          var a = (Math.PI * 2 * i) / n + Math.random() * .6;
+          var d = 35 + Math.random() * 55;
+          img.animate([
+            { transform: "translate(0,0) scale(.3) rotate(0deg)", opacity: 1 },
+            { transform: "translate(" + Math.cos(a) * d + "px," + Math.sin(a) * d + "px) scale(1) rotate(" + ((Math.random() - .5) * 240) + "deg)", opacity: 0 }
+          ], { duration: 650 + Math.random() * 350, easing: "cubic-bezier(.1,.7,.3,1)", fill: "forwards" })
+            .onfinish = (function (el) { return function () { el.remove(); }; })(img);
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
