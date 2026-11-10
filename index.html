@@ -2,23 +2,195 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profil Mahasiswa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profil Mahasiswa – Nama Lengkap Kamu</title>
+  <meta name="description" content="Website profil mahasiswa bertema Persona 5: identitas, program studi, deskripsi, hobi, dan kontak.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial; background: #eaf2f8;
-           text-align: center; padding: 40px; }
-    .card { background: blue; max-width: 500px;
-            margin: auto; padding: 30px; border-radius: 15px; }
-    h1 { color: #1769aa; }
+    :root {
+      --red: #e5001c;
+      --dark-red: #8f0010;
+      --black: #0b0b0b;
+      --white: #ffffff;
+    }
+    * { box-sizing: border-box; margin: 0; }
+    html { background: var(--black); }
+    body {
+      font-family: "Archivo", system-ui, sans-serif;
+      color: var(--white);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 48px 20px 64px;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle, rgba(0,0,0,.35) 1.5px, transparent 2px) 0 0 / 10px 10px,
+        linear-gradient(115deg, var(--red) 0 38%, var(--black) 38% 41%, var(--dark-red) 41% 58%, var(--black) 58% 100%);
+      background-attachment: fixed;
+    }
+    h1, h2, .display { font-family: "Anton", Impact, sans-serif; font-weight: 400; text-transform: uppercase; letter-spacing: .02em; }
+    .wrap { max-width: 920px; margin: 0 auto; display: grid; gap: 44px; }
+
+    /* ===== Header / kartu identitas ===== */
+    .hero { display: grid; grid-template-columns: 280px 1fr; gap: 32px; align-items: center; }
+    .photo {
+      position: relative; width: 260px; height: 320px; justify-self: center;
+      transform: rotate(-4deg);
+      animation: slash .5s cubic-bezier(.2,.9,.3,1.2) both;
+    }
+    .photo::before { /* bayangan merah */
+      content: ""; position: absolute; inset: 0; background: var(--black);
+      clip-path: polygon(8% 0, 100% 4%, 92% 100%, 0 94%); transform: translate(14px, 14px);
+    }
+    .photo .frame {
+      position: absolute; inset: 0; background: var(--white); padding: 8px;
+      clip-path: polygon(8% 0, 100% 4%, 92% 100%, 0 94%);
+    }
+    .photo .frame > * { width: 100%; height: 100%; object-fit: cover; display: block;
+      clip-path: polygon(8% 0, 100% 4%, 92% 100%, 0 94%); background: var(--red); }
+
+    .name-block { animation: slash .5s .12s cubic-bezier(.2,.9,.3,1.2) both; }
+    .tag {
+      display: inline-block; background: var(--white); color: var(--black);
+      font-family: "Anton", Impact, sans-serif; letter-spacing: .08em; text-transform: uppercase;
+      padding: 2px 16px; transform: skew(-12deg) rotate(-2deg); margin-bottom: 10px;
+    }
+    h1 {
+      font-size: clamp(2.6rem, 8vw, 5rem); line-height: 1; font-style: italic;
+      background: var(--black); display: inline-block; padding: 8px 28px 8px 20px;
+      transform: skew(-10deg) rotate(-2deg);
+      box-shadow: 10px 10px 0 var(--white);
+    }
+    h1 span { display: inline-block; transform: skew(10deg); }
+
+    dl { margin-top: 28px; display: grid; gap: 8px; max-width: 460px; }
+    dl div {
+      display: grid; grid-template-columns: 130px 1fr; background: var(--black);
+      transform: skew(-10deg); border-left: 8px solid var(--white);
+    }
+    dl div:nth-child(even) { margin-left: 18px; }
+    dt, dd { padding: 6px 14px; transform: skew(10deg); }
+    dt { color: var(--red); font-family: "Anton", Impact, sans-serif; text-transform: uppercase; letter-spacing: .06em; }
+    dd { font-weight: 700; }
+
+    /* ===== Bagian konten ===== */
+    .panel { position: relative; }
+    .panel h2 {
+      display: inline-block; font-size: 1.9rem; font-style: italic;
+      background: var(--white); color: var(--black);
+      padding: 0 22px 0 16px; transform: skew(-12deg) rotate(-2deg);
+      position: relative; z-index: 2; margin-left: -8px;
+    }
+    .panel h2 span { display: inline-block; transform: skew(12deg); }
+    .panel .body {
+      background: var(--black); margin-top: -14px; padding: 36px 36px 30px;
+      clip-path: polygon(0 4%, 100% 0, 98% 100%, 1.5% 96%);
+      border: 0; box-shadow: 0 0 0 4px var(--white);
+    }
+    .panel .wrapper { filter: drop-shadow(10px 10px 0 var(--red)); }
+    .about p { max-width: 62ch; font-size: 1.05rem; }
+
+    .chips { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 14px; }
+    .chips li {
+      background: var(--white); color: var(--black); font-weight: 700;
+      padding: 6px 22px; transform: skew(-12deg);
+      transition: background .15s, color .15s, transform .15s;
+    }
+    .chips li:hover { background: var(--red); color: var(--white); transform: skew(-12deg) translate(-3px, -3px); }
+
+    .contacts { list-style: none; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+    .contacts a {
+      display: block; padding: 10px 20px; background: var(--white); color: var(--black);
+      font-family: "Anton", Impact, sans-serif; letter-spacing: .06em; text-transform: uppercase;
+      text-decoration: none; transform: skew(-10deg);
+      transition: background .15s, color .15s, transform .15s;
+    }
+    .contacts a::before { content: "\2605  "; color: var(--red); }
+    .contacts a:hover { background: var(--red); color: var(--white); transform: skew(-10deg) translateX(10px); }
+    .contacts a:hover::before { color: var(--white); }
+    a:focus-visible { outline: 4px solid var(--red); outline-offset: 3px; }
+
+    footer { text-align: center; font-family: "Anton", Impact, sans-serif; letter-spacing: .1em;
+      text-transform: uppercase; }
+    footer span { background: var(--black); padding: 4px 16px; display: inline-block; transform: skew(-12deg); }
+
+    @keyframes slash { from { opacity: 0; transform: translateX(-60px) rotate(-8deg) scale(.9); } }
+    .photo { --r: -4deg; }
+    @media (prefers-reduced-motion: reduce) { .photo, .name-block { animation: none; } }
+
+    @media (max-width: 720px) {
+      body { background-attachment: scroll; padding-top: 32px; }
+      .hero { grid-template-columns: 1fr; gap: 36px; text-align: left; }
+      dl div { grid-template-columns: 110px 1fr; }
+      .panel .body { padding: 32px 22px 26px; }
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Profil Nama</h1>
-    <h2>Nama: Arya</h2>
-    <p>Program Studi: Manajemen Informasi Komunikasi</p>
-    <p>Github test.</p>
-    <p>Email: mahasiswa@email.com</p>
-  </div>
+  <main class="wrap">
+
+    <!-- Nama & identitas, foto/ilustrasi, program studi -->
+    <header class="hero">
+      <div class="photo">
+        <div class="frame">
+          <!-- Ganti dengan fotomu: <img src="foto.jpg" alt="Foto Nama Lengkap Kamu"> -->
+          <svg viewBox="0 0 200 250" role="img" aria-label="Ilustrasi profil" preserveAspectRatio="xMidYMid slice">
+            <rect width="200" height="250" fill="#e5001c"/>
+            <circle cx="100" cy="100" r="42" fill="#0b0b0b"/>
+            <path d="M20 250c0-56 36-88 80-88s80 32 80 88z" fill="#0b0b0b"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="name-block">
+        <span class="tag">Profil mahasiswa</span>
+        <h1><span>Nama Lengkap Kamu</span></h1>
+        <dl>
+          <div><dt>NIM</dt><dd>1234567890</dd></div>
+          <div><dt>Prodi</dt><dd>Teknik Informatika</dd></div>
+          <div><dt>Kampus</dt><dd>Nama Universitas Kamu</dd></div>
+          <div><dt>Angkatan</dt><dd>2024</dd></div>
+        </dl>
+      </div>
+    </header>
+
+    <!-- Deskripsi singkat -->
+    <section class="panel about" aria-labelledby="tentang">
+      <h2 id="tentang"><span>Tentang saya</span></h2>
+      <div class="wrapper"><div class="body">
+        <p>Halo! Saya mahasiswa Teknik Informatika yang suka belajar hal baru, terutama pengembangan web dan desain antarmuka. Saya sedang membangun portofolio pertama saya dan senang berkolaborasi dalam proyek kampus.</p>
+      </div></div>
+    </section>
+
+    <!-- Hobi atau minat -->
+    <section class="panel" aria-labelledby="hobi">
+      <h2 id="hobi"><span>Hobi dan minat</span></h2>
+      <div class="wrapper"><div class="body">
+        <ul class="chips">
+          <li>Coding</li>
+          <li>Desain grafis</li>
+          <li>Membaca</li>
+          <li>Fotografi</li>
+          <li>Musik</li>
+        </ul>
+      </div></div>
+    </section>
+
+    <!-- Kontak atau media sosial (opsional) -->
+    <section class="panel" aria-labelledby="kontak">
+      <h2 id="kontak"><span>Kontak</span></h2>
+      <div class="wrapper"><div class="body">
+        <ul class="contacts">
+          <li><a href="mailto:email@contoh.com">Email</a></li>
+          <li><a href="https://instagram.com/username" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://github.com/username" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://linkedin.com/in/username" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div></div>
+    </section>
+
+    <footer><span>&copy; 2026 Nama Lengkap Kamu</span></footer>
+  </main>
 </body>
 </html>
