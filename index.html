@@ -31,12 +31,12 @@
     /* Lapis 1: latar statis (cadangan, selalu tampil walau lapis gerak hilang) */
     body::before {
       content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-      background: #0a0a0a url("background.jpg") center / cover no-repeat;
+      background: #0a0a0a url("background.jpeg") center / cover no-repeat;
     }
     /* Lapis 2: salinan gambar yang bergeser sangat pelan di atas lapis 1 */
     body::after {
       content: ""; position: fixed; inset: -40px; z-index: 0; pointer-events: none;
-      background: url("background.jpg") center / cover no-repeat;
+      background: url("background.jpeg") center / cover no-repeat;
       animation: drift 150s ease-in-out infinite alternate;
     }
     /* ===== Gambar 1: gugusan bintang di pojok kiri ===== */
