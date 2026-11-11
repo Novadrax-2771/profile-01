@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Profil Arya Aditya Pasha</title>
   <meta name="description" content="Website profil mahasiswa bertema Persona 5 Royal: identitas, program studi, deskripsi, dan hobi.">
+  <link rel="preload" as="image" href="background.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Font pengganti gratis untuk gaya P5R (lihat README untuk pemetaannya) -->
@@ -27,10 +28,16 @@
     }
 
     /* ===== Gambar 2: latar bintang, bergerak pelan ke kanan-bawah ===== */
+    /* Lapis 1: latar statis (cadangan, selalu tampil walau lapis gerak hilang) */
     body::before {
-      content: ""; position: fixed; inset: -80px; z-index: 0; pointer-events: none;
+      content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
       background: #0a0a0a url("background.jpg") center / cover no-repeat;
-      will-change: transform; animation: drift 150s ease-in-out infinite alternate;
+    }
+    /* Lapis 2: salinan gambar yang bergeser sangat pelan di atas lapis 1 */
+    body::after {
+      content: ""; position: fixed; inset: -40px; z-index: 0; pointer-events: none;
+      background: url("background.jpg") center / cover no-repeat;
+      animation: drift 150s ease-in-out infinite alternate;
     }
     /* ===== Gambar 1: gugusan bintang di pojok kiri ===== */
     .corner { position: fixed; top: -34px; left: -40px; width: 210px; height: 210px; z-index: 1; pointer-events: none; }
@@ -39,8 +46,8 @@
 
     /* Geser sangat pelan ke kanan-bawah (hanya transform, diproses GPU) */
     @keyframes drift {
-      from { transform: translate3d(-60px, -60px, 0); }
-      to { transform: translate3d(60px, 60px, 0); }
+      from { transform: translate3d(-30px, -30px, 0); }
+      to { transform: translate3d(30px, 30px, 0); }
     }
 
     .wrap { position: relative; z-index: 2; max-width: 920px; margin: 0 auto; display: grid; gap: 56px; }
@@ -156,7 +163,7 @@
     @keyframes slash { from { opacity: 0; translate: -60px 0; scale: .9; } }
 
     @media (prefers-reduced-motion: reduce) {
-      body::before, .photo, .name-block, .tag, h1, .hd, .chips li { animation: none; }
+      body::after, .photo, .name-block, .tag, h1, .hd, .chips li { animation: none; }
     }
     @media (max-width: 720px) {
       body { padding-top: 40px; }
@@ -205,7 +212,7 @@
     <section class="panel about" aria-labelledby="tentang">
       <div class="hd"><h2 id="tentang" data-ransom>Tentang saya</h2><span class="jp" aria-hidden="true">自己紹介</span></div>
       <div class="wrapper"><div class="body">
-        <p>Halo! Saya mahasigma biasa makan nasi</p>
+        <p>Halo! Saya mahasigma biasa makan nasi nonton SBR</p>
       </div></div>
     </section>
 
@@ -215,7 +222,7 @@
         <ul class="chips">
           <li>Game</li>
           <li>Olahraga</li>
-          <li>Menggambar</li>
+          <li>Menonton</li>
           <li>Musik</li>
         </ul>
       </div></div>
