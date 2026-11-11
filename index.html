@@ -6,6 +6,7 @@
   <title>Profil Arya Aditya Pasha</title>
   <meta name="description" content="Website profil mahasiswa bertema Persona 5 Royal: identitas, program studi, deskripsi, dan hobi.">
   <link rel="preload" as="image" href="background.jpeg">
+  <link rel="preload" as="image" href="Ren_Portrait_Joker.webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Font pengganti gratis untuk gaya P5R (lihat README untuk pemetaannya) -->
@@ -50,7 +51,45 @@
       to { transform: translate3d(30px, 30px, 0); }
     }
 
-    .wrap { position: relative; z-index: 2; max-width: 920px; margin: 0 auto; display: grid; gap: 56px; }
+    .stage {
+      position: relative; z-index: 2; max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: minmax(200px, 320px) minmax(0, 1fr); gap: 40px; align-items: start;
+    }
+    .wrap { position: relative; min-width: 0; display: grid; gap: 56px; }
+
+    /* ===== Karakter Joker di sisi kiri ===== */
+    .joker { position: sticky; top: 24px; animation: slash .5s cubic-bezier(.2,.9,.3,1.2) both; }
+    .joker .art { position: relative; margin-left: 14px; }
+    .joker .art::before, .joker .art::after {
+      content: ""; position: absolute; inset: 8% -4% 0 -8%;
+      clip-path: polygon(10% 0, 100% 7%, 93% 100%, 0 93%);
+    }
+    .joker .art::before { background: var(--black); transform: translate(12px, 12px); }
+    .joker .art::after { background: var(--red); }
+    .joker img { position: relative; z-index: 1; display: block; width: 100%; height: auto; }
+
+    /* ===== Bubble text khas P5 ===== */
+    .speech {
+      position: relative; padding: 92px 9% 70px 11%; min-height: 220px;
+      transform-origin: left center; animation: stiff 3.6s steps(4) infinite;
+    }
+    .speech::before, .speech::after { content: ""; position: absolute; inset: 0; }
+    .speech::before { background: var(--red); clip-path: polygon(1% 14%, 16% 0%, 38% 9%, 66% 1%, 100% 12%, 97% 40%, 100% 64%, 93% 98%, 68% 90%, 42% 100%, 15% 88%, 3% 99%, 6% 58%); }
+    .speech::after { background: var(--black); clip-path: polygon(6% 22%, 20% 10%, 40% 17%, 66% 9%, 94% 19%, 92% 42%, 95% 62%, 89% 90%, 66% 83%, 42% 91%, 18% 81%, 9% 88%, 10% 56%); }
+    .speech > * { position: relative; z-index: 1; }
+    .speech .strip {
+      position: absolute; top: 9%; left: 8%; width: 44%; height: 13%;
+      clip-path: polygon(0 0, 100% 22%, 95% 100%, 3% 84%);
+      background:
+        repeating-linear-gradient(62deg, transparent 0 13px, rgba(11,11,11,.85) 13px 21px),
+        repeating-linear-gradient(115deg, var(--white) 0 9px, var(--black) 9px 18px);
+    }
+    .speech .mini { position: absolute; z-index: 2; width: 30px; height: 30px; }
+    .speech .mini:nth-of-type(1) { top: -3%; left: 47%; transform: rotate(12deg); }
+    .speech .mini:nth-of-type(2) { bottom: 4%; left: 2%; width: 38px; height: 38px; transform: rotate(-10deg); }
+    .speech .mini:nth-of-type(3) { top: 44%; right: -1%; width: 26px; height: 26px; transform: rotate(20deg); }
+    .speech p { font-size: clamp(1.5rem, 6vw, 3rem); line-height: 1.25; }
+    .speech p + p { margin-top: .1em; }
 
     /* ===== Animasi kaku besar-kecil ala P5R ===== */
     @keyframes stiff {
@@ -163,10 +202,15 @@
     @keyframes slash { from { opacity: 0; translate: -60px 0; scale: .9; } }
 
     @media (prefers-reduced-motion: reduce) {
-      body::after, .photo, .name-block, .tag, h1, .hd, .chips li { animation: none; }
+      body::after, .photo, .name-block, .tag, h1, .hd, .chips li, .speech, .joker { animation: none; }
+    }
+    @media (max-width: 860px) {
+      .stage { grid-template-columns: 1fr; gap: 12px; }
+      .joker { position: relative; top: 0; width: min(230px, 62%); }
     }
     @media (max-width: 720px) {
       body { padding-top: 40px; }
+      .speech { padding: 78px 9% 56px 11%; }
       .corner { width: 130px; height: 130px; top: -20px; left: -24px; }
       .hero { grid-template-columns: 1fr; gap: 36px; }
       dl div { grid-template-columns: 105px 1fr; }
@@ -178,7 +222,19 @@
 <body>
   <div class="corner" aria-hidden="true"></div>
 
+  <div class="stage">
+  <aside class="joker" aria-hidden="true">
+    <div class="art"><img src="Ren_Portrait_Joker.webp" alt="" width="768" height="1216" decoding="async"></div>
+  </aside>
+
   <main class="wrap">
+    <div class="speech">
+      <span class="strip" aria-hidden="true"></span>
+      <img class="mini" alt="" aria-hidden="true"><img class="mini" alt="" aria-hidden="true"><img class="mini" alt="" aria-hidden="true">
+      <p data-ransom>Welcome to</p>
+      <p data-ransom>Phantom Thieves</p>
+    </div>
+
     <header class="hero">
       <div class="photo">
         <div class="frame">
@@ -230,6 +286,7 @@
 
     <footer><span>&copy; 2026 Arya Aditya Pasha</span></footer>
   </main>
+  </div>
 
   <script>
     (function () {
@@ -282,6 +339,7 @@
         uri('<svg xmlns="http://www.w3.org/2000/svg" viewBox="-60 -60 120 120">' + star(0, 0, 1, 0, R, W, K) + "</svg>"),
         uri('<svg xmlns="http://www.w3.org/2000/svg" viewBox="-60 -60 120 120">' + star(0, 0, 1, 0, K, W, R) + "</svg>")
       ];
+      document.querySelectorAll(".speech .mini").forEach(function (m) { m.src = variants[0]; });
       document.addEventListener("pointerdown", function (e) {
         if (reduce.matches || document.querySelectorAll(".burst").length > 24) return;
         var n = 8;
